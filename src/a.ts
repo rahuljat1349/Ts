@@ -20,11 +20,11 @@ runAfter1s(() => {
 });
 
 // Interfaces
-interface User {
-  username: string;
-  email?: string; //if have
-  age: number;
-}
+// interface User {
+//   username: string;
+//   email?: string; //if have
+//   age: number;
+// }
 
 // Types
 
@@ -122,11 +122,84 @@ let output2 = identity2(12);
 
 output1.toUpperCase();
 
-// 
+//
 // also can be complex like
 
 interface User3 {
   name: string;
 }
 let output3 = identity2<User3>({ name: "Rahul" });
+
+// Pick
+
+interface User {
+  name: string;
+  email: string;
+  id: string;
+  age: number;
+  password: string;
+}
+
+type updateProps = Pick<User, "name" | "age" | "password">;
+
+// Partial
+
+type updatePropsOptional = Partial<updateProps>;
+
+function updateUserInfo(props: updatePropsOptional) {
+  // code here
+}
+
+updateUserInfo({ name: "Rahul" });
+
+// readonly
+
+type User4 = {
+  userName: string;
+  age: number;
+};
+
+const user: Readonly<User4> = {
+  userName: "Rahul",
+  age: 20,
+};
+//  user.age = 30        // it will not work
+
+
+
+// Records
+
+// we can use simple types like
+
+type Contacts = {
+  [key: string]: number;
+};
+
+// or we can use records like
+type Contacts2 = Record<string, number>;
+
+const user2: Contacts2 = {
+  adsdds: 458,
+};
+
+// Maps
+const User5 = new Map<string, number>()
+User5.set("abc", 5754);
+
+User5.get("abc")
+
+// 
+
+
+// Exclude 
+type event = "click" | "scroll" | "mouseMove"
+
+type excludeEvent = Exclude<event, "scroll">   //  "click" | "mouseMove"
+
+function handleEvent(eventType:excludeEvent){
+  console.log(`Handling event ${eventType}`);  
+}
+
+handleEvent("mouseMove")  // ok
+// handleEvent("scroll")  // not ok
 
